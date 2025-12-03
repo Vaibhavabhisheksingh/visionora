@@ -1,0 +1,25 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+    <h1 class="fw-bold mb-4">All Specialists</h1>
+
+    <% if (specialists.length === 0) { %>
+        <p class="text-muted">No specialists found.</p>
+    <% } %>
+
+    <div class="row g-4">
+        <% specialists.forEach(s => { %>
+            <div class="col-md-4">
+                <div class="card shadow-sm rounded-4">
+                    <img src="<%= s.image?.url %>" class="card-img-top rounded-top-4" alt="">
+                    <div class="card-body">
+                        <h5 class="fw-bold"><%= s.name %></h5>
+                        <p class="text-muted"><%= s.location %></p>
+                        <a href="/specialists/<%= s._id %>" class="btn btn-dark btn-sm rounded-pill mt-2">View</a>
+                        <a href="/specialists/<%= s._id %>/edit" class="btn btn-outline-dark btn-sm rounded-pill mt-2">Edit</a>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>

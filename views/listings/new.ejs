@@ -1,0 +1,115 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+
+    <!-- Back Button -->
+    <a href="/listings" class="btn btn-outline-dark mb-4 rounded-pill">
+        ← Back to Collection
+    </a>
+
+    <h1 class="text-center mb-4 fw-bold">Create New Listing</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- FORM START -->
+            <form 
+                action="/listings" 
+                method="POST" 
+                class="shadow p-4 rounded needs-validation" 
+                novalidate
+                enctype="multipart/form-data"
+            >
+
+                <!-- Title -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Product Title</label>
+                    <input 
+                        type="text" 
+                        name="listing[title]" 
+                        class="form-control"
+                        placeholder="Enter eyewear name" 
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Please enter a product title.
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Description</label>
+                    <textarea 
+                        class="form-control" 
+                        name="listing[description]" 
+                        rows="3" 
+                        placeholder="Enter product description"
+                        required
+                    ></textarea>
+                    <div class="invalid-feedback">
+                        Please provide a description for the product.
+                    </div>
+                </div>
+
+                <!-- Image URL -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Upload Image</label>
+                    <input 
+                        type="file" 
+                        class="form-control" 
+                        name="listing[image]" 
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Please select an image
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Price (₹)</label>
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        name="listing[price]" 
+                        placeholder="Enter price"
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Please provide price.
+                    </div>
+                
+                </div>
+
+                 <!-- ✅ CATEGORY DROPDOWN (NEWLY ADDED) -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Category</label>
+                    <select 
+                        name="listing[category]" 
+                        class="form-select" 
+                        required
+                    >
+                        <option value="" disabled selected>Select Category</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="kids">Kids</option>
+                        <option value="lens">Lens</option>
+                        <option value="others">Others</option>
+                    </select>
+                    <div class="invalid-feedback">
+                        Please select a category.
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100 rounded-pill fw-semibold">
+                    Create Listing
+                </button>
+
+            </form>
+            <!-- FORM END -->
+
+        </div>
+    </div>
+
+</div>

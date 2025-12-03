@@ -1,0 +1,102 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+    <h1 class="mb-4 fw-bold">Edit Specialist</h1>
+
+    <form action="/specialists/<%= specialist._id %>?_method=PUT" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+        <!-- Name -->
+        <div class="mb-3">
+            <label for="name" class="form-label">Specialist Name</label>
+            <input type="text" 
+                   name="specialist[name]" 
+                   class="form-control" 
+                   id="name" 
+                   value="<%= specialist.name %>" 
+                   required>
+            <div class="invalid-feedback">Name is required.</div>
+        </div>
+
+        <!-- Specialization -->
+        <div class="mb-3">
+            <label for="specialization" class="form-label">Specialization</label>
+            <input type="text" 
+                   name="specialist[specialization]" 
+                   class="form-control" 
+                   id="specialization" 
+                   value="<%= specialist.specialization %>">
+        </div>
+
+        <!-- Experience -->
+        <div class="mb-3">
+            <label for="experience" class="form-label">Experience (Years)</label>
+            <input type="number" 
+                   name="specialist[experience]" 
+                   class="form-control" 
+                   id="experience" 
+                   value="<%= specialist.experience %>">
+        </div>
+
+        <!-- Fees -->
+        <div class="mb-3">
+            <label for="fees" class="form-label">Consultation Fees (₹)</label>
+            <input type="number" 
+                   name="specialist[fees]" 
+                   class="form-control" 
+                   id="fees" 
+                   value="<%= specialist.fees %>">
+        </div>
+
+        <!-- Location -->
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text"
+                   name="specialist[location]"
+                   class="form-control"
+                   id="location"
+                   value="<%= specialist.location %>"
+                   required>
+            <div class="invalid-feedback">
+                Location is required.
+            </div>
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="specialist[description]" 
+                      class="form-control" 
+                      id="description" 
+                      rows="4"><%= specialist.description %></textarea>
+        </div>
+
+        <!-- Image -->
+        <div class="mb-3">
+            <label for="image" class="form-label">Change Image</label>
+            <input type="file" 
+                   name="specialist[image]" 
+                   class="form-control" 
+                   id="image" 
+            >
+        </div>
+
+        <button type="submit" class="btn btn-success rounded-pill fw-semibold px-4">
+            <i class="fa-solid fa-pen"></i> Update Specialist
+        </button>
+    </form>
+</div>
+
+<script>
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('.needs-validation')
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', event => {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+        form.classList.add('was-validated')
+      }, false)
+    })
+  })()
+</script>

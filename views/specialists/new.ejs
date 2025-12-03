@@ -1,0 +1,108 @@
+<% layout("/layouts/boilerplate") %>
+ 
+<div class="container mt-5">
+    <h1 class="mb-4 fw-bold">Add New Eye Specialist</h1>
+
+    <form action="/specialists" method="POST" class="needs-validation" novalidate enctype="multipart/form-data">
+
+        <!-- Name -->
+        <div class="mb-3">
+            <label for="name" class="form-label">Specialist Name</label>
+            <input type="text" 
+                   name="specialist[name]" 
+                   class="form-control" 
+                   id="name" 
+                   placeholder="Enter specialist name" 
+                   required>
+            <div class="invalid-feedback">
+                Name is required.
+            </div>
+        </div>
+
+        <!-- Specialization -->
+        <div class="mb-3">
+            <label for="specialization" class="form-label">Specialization</label>
+            <input type="text" 
+                   name="specialist[specialization]" 
+                   class="form-control" 
+                   id="specialization" 
+                   placeholder="E.g., Ophthalmologist, Optometrist">
+        </div>
+
+        <!-- Experience -->
+        <div class="mb-3">
+            <label for="experience" class="form-label">Experience (Years)</label>
+            <input type="number" 
+                   name="specialist[experience]" 
+                   class="form-control" 
+                   id="experience" 
+                   placeholder="E.g., 5">
+        </div>
+
+        <!-- Fees -->
+        <div class="mb-3">
+            <label for="fees" class="form-label">Consultation Fees (₹)</label>
+            <input type="number" 
+                   name="specialist[fees]" 
+                   class="form-control" 
+                   id="fees" 
+                   placeholder="E.g., 500">
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="specialist[description]" 
+                      class="form-control" 
+                      id="description" 
+                      rows="4" 
+                      placeholder="Write a short description"></textarea>
+        </div>
+
+        <!-- Image URL -->
+        <div class="mb-3">
+            <label for="image" class="form-label">Upload Image</label>
+            <input type="file" 
+                   name="specialist[image]" 
+                   class="form-control" 
+                   id="image"
+                   required
+            >
+        </div>
+        <!-- Location -->
+<div class="mb-3">
+    <label for="location" class="form-label">Location</label>
+    <input type="text"
+           name="specialist[location]"
+           class="form-control"
+           id="location"
+           placeholder="City / Clinic / Area"
+           required>
+    <div class="invalid-feedback">
+        Location is required.
+    </div>
+</div>
+
+
+        <button type="submit" class="btn btn-success rounded-pill fw-semibold px-4">
+            <i class="fa-solid fa-plus"></i> Add Specialist
+        </button>
+    </form>
+</div>
+
+<script>
+    // Bootstrap validation
+    (() => {
+      'use strict';
+      const forms = document.querySelectorAll('.needs-validation')
+      Array.from(forms).forEach(form => {
+        form.addEventListener('submit', event => {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+    })()
+</script>

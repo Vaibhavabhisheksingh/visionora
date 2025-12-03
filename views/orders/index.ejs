@@ -1,0 +1,55 @@
+<% layout("/layouts/boilerplate") %>
+
+<h2>Your Orders</h2>
+
+<% if (orders.length === 0) { %>
+  <p>No orders yet.</p>
+<% } %>
+ 
+<% orders.forEach(order => { %>
+  <div class="card p-3 mb-3">
+    <h4><%= order.product.title %></h4>
+
+    <p>Status: <%= order.status %></p>
+
+    <p>
+      <b>Shipping To:</b><br>
+      <%= order.shippingDetails.fullName %><br>
+      <%= order.shippingDetails.addressLine %>, <%= order.shippingDetails.city %><br>
+      <%= order.shippingDetails.state %> - <%= order.shippingDetails.pincode %><br>
+      Phone: <%= order.shippingDetails.phone %>
+      <strong>Price:</strong> ₹<%= order.price %>
+    </p>
+    <p>Payment: <%= order.paymentStatus %></p>
+<p>Method: <%= order.paymentMethod %></p>
+
+    <form class="cancel-order-form" action="/orders/<%= order._id %>?_method=DELETE" method="POST">
+      <button type="button" class="btn btn-danger cancel-btn">Cancel Order</button>
+    </form>
+
+  </div>
+<% }) %>
+
+<script>
+  document.querySelectorAll(".cancel-btn").forEach(button => {
+    button.addEventListener("click", function (e) {
+
+      const form = this.closest(".cancel-order-form");
+
+      Swal.fire({
+        title: "Are you sure?",
+        text: "Do you really want to cancel this order?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, cancel",
+        cancelButtonText: "No"
+      }).then((result) => {
+        if (result.isConfirmed) {
+          form.submit();
+        }
+      });
+
+    });
+  });
+</script>
+

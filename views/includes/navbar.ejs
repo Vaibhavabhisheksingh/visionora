@@ -1,0 +1,164 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm py-3 sticky-top">
+  <div class="container">
+
+    <!-- Left Side: Icon + Brand -->
+    <a class="navbar-brand d-flex align-items-center" href="/listings" style="font-weight: 700; font-size: 1.4rem;">
+      <i class="fa-solid fa-glasses"></i>&nbsp; Visionora
+    </a>
+
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Right Side Items -->
+    <div class="collapse navbar-collapse" id="navMenu">
+
+      <!-- Middle: Search Bar -->
+      <form class="d-flex mx-auto my-2 my-lg-0 position-relative" action="/search" method="GET" style="max-width: 400px; width: 100%;">
+        <input 
+          class="form-control rounded-pill ps-4 pe-5 shadow-sm border-1" 
+          type="search" 
+          name="q" 
+          placeholder="Search products..." 
+          aria-label="Search"
+          style="height: 40px; font-size: 0.95rem;"
+        >
+        <button 
+          class="btn btn-dark position-absolute end-0 top-0 rounded-pill h-100 d-flex align-items-center justify-content-center pe-3 ps-3" 
+          type="submit"
+          style="border-top-left-radius: 0; border-bottom-left-radius: 0;"
+        >
+          <i class="fa-solid fa-magnifying-glass"></i>
+        </button>
+      </form>
+
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+        <!-- If Admin: Show Add Listing -->
+        <% if (currentUser && currentUser.username === "admin") { %>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="/listings/new">
+              <i class="fa-solid fa-plus"></i> Add Listing
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="/admin">
+              <i class="fa-solid fa-gauge-high"></i> Admin Dashboard
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="/specialists/new">
+              <i class="fa-solid fa-user-doctor"></i> Add Specialist
+            </a>
+          </li>
+        <% } %>
+
+        <!-- If NOT logged in: Show Login + Signup -->
+        <% if (!currentUser) { %>
+          <li class="nav-item">
+            <a class="nav-link fw-semibold" href="/login">
+              <i class="fa-solid fa-right-to-bracket"></i> Login
+            </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="btn btn-dark rounded-pill px-3 ms-2 fw-semibold" href="/signup">
+              <i class="fa-solid fa-user-plus"></i>&nbsp; Signup
+            </a>
+          </li>
+        <% } %>
+
+        <!-- If logged in: Show Logout -->
+        <!-- If logged in: Show Profile Icon -->
+<% if (currentUser) { %>
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle fw-semibold" href="#" id="profileMenu" role="button" 
+       data-bs-toggle="dropdown" aria-expanded="false">
+      <i class="fa-solid fa-circle-user fa-xl"></i>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end shadow-sm" aria-labelledby="profileMenu">
+      <li><a class="dropdown-item fw-semibold" href="/profile">
+        <i class="fa-solid fa-user"></i> My Profile
+      </a></li>
+      <li><hr class="dropdown-divider"></li>
+      <li>
+        <a class="dropdown-item text-danger fw-semibold" href="/logout">
+          <i class="fa-solid fa-right-from-bracket"></i> Logout
+        </a>
+      </li><hr class="dropdown-divider"></li>
+      <li class="nav-item d-flex align-items-center ms-3">
+  <button id="themeToggle" class="btn btn-outline-dark rounded-circle p-2">
+    <i id="themeIcon" class="fa-solid fa-moon"></i>
+  </button>
+</li>
+
+    </ul>
+  </li>
+<% } %>
+
+        
+      </ul>
+    </div>
+
+  </div>
+</nav>
+
+
+<style>
+  /* Smooth transition */
+  body, .navbar, .card, .dropdown-menu {
+      transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* Dark Mode */
+  body.dark-mode {
+      background-color: #121212;
+      color: #eaeaea;
+  }
+
+  .navbar.dark-mode {
+      background-color: #1f1f1f !important;
+  }
+
+  .card.dark-mode {
+      background-color: #1e1e1e;
+      color: #fff;
+      border: 1px solid #333;
+  }
+
+  .dropdown-menu.dark-mode {
+      background-color: #222;
+      color: #fff;
+  }
+  
+  a.dark-mode {
+      color: #eaeaea !important;
+  }
+</style>
+
+<script>
+  const toggleBtn = document.getElementById("themeToggle");
+  const themeIcon = document.getElementById("themeIcon");
+
+  // Load Saved Mode
+  const savedTheme = localStorage.getItem("theme");
+  if (savedTheme === "dark") {
+    document.body.classList.add("dark-mode");
+    themeIcon.classList.replace("fa-moon", "fa-sun");
+  }
+
+  toggleBtn.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    // Change Icon
+    if (document.body.classList.contains("dark-mode")) {
+      themeIcon.classList.replace("fa-moon", "fa-sun");
+      localStorage.setItem("theme", "dark");
+    } else {
+      themeIcon.classList.replace("fa-sun", "fa-moon");
+      localStorage.setItem("theme", "light");
+    }
+  });
+</script>

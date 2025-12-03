@@ -1,0 +1,117 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+
+    <h1 class="text-center fw-bold mb-4">Create Your Account</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <form action="/signup" method="POST" class="shadow p-4 rounded needs-validation" novalidate>
+
+                <!-- Username -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        <i class="fa-solid fa-user"></i> Username
+                    </label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="username" 
+                        placeholder="Enter your username" 
+                        required
+                    >
+                    <div class="invalid-feedback">Username is required.</div>
+                </div>
+
+                <!-- Email -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        <i class="fa-solid fa-envelope"></i> Email
+                    </label>
+                    <input 
+                        type="email" 
+                        class="form-control" 
+                        name="email" 
+                        placeholder="Enter your email address" 
+                        required
+                    >
+                    <div class="invalid-feedback">Please enter a valid email.</div>
+                </div>
+
+                <!-- Password -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        <i class="fa-solid fa-lock"></i> Password
+                    </label>
+                    <input 
+                        type="password" 
+                        class="form-control" 
+                        name="password" 
+                        placeholder="Create a password" 
+                        minlength="6"
+                        required
+                    >
+                    <div class="invalid-feedback">Password must be at least 6 characters.</div>
+                </div>
+
+                <!-- Confirm Password -->
+                <div class="mb-4">
+                    <label class="form-label fw-semibold">
+                        <i class="fa-solid fa-lock"></i> Confirm Password
+                    </label>
+                    <input 
+                        type="password" 
+                        class="form-control" 
+                        name="confirmPassword" 
+                        placeholder="Re-enter your password"
+                        required
+                    >
+                    <div class="invalid-feedback">Please confirm your password.</div>
+                </div>
+
+                <!-- Submit -->
+                <button class="btn btn-primary w-100 rounded-pill fw-semibold" type="submit">
+                    Sign Up
+                </button>
+
+                <!-- Already have account? -->
+                <p class="text-center mt-3 mb-0">
+                    Already have an account? 
+                    <a href="/login" class="text-decoration-none fw-semibold">Login here</a>
+                </p>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap Validation Script -->
+<script>
+(() => {
+  'use strict'
+  const forms = document.querySelectorAll('.needs-validation')
+
+  Array.from(forms).forEach(form => {
+    form.addEventListener('submit', event => {
+
+      const password = form.querySelector('input[name="password"]');
+      const confirmPassword = form.querySelector('input[name="confirmPassword"]');
+
+      // Password match validation
+      if (confirmPassword.value !== password.value) {
+        confirmPassword.setCustomValidity("Passwords do not match");
+      } else {
+        confirmPassword.setCustomValidity("");
+      }
+
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      }
+
+      form.classList.add('was-validated')
+    }, false)
+  })
+})();
+</script>

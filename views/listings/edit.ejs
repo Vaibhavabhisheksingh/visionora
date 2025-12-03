@@ -1,0 +1,115 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+
+    <!-- Back Button --> 
+    <a href="/listings/<%= listing._id %>" class="btn btn-outline-dark mb-4 rounded-pill">
+        ← Back to Details
+    </a>
+
+    <h1 class="text-center mb-4 fw-bold">Edit Listing</h1>
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <!-- FORM START -->
+            <form 
+                action="/listings/<%= listing._id %>?_method=PUT" 
+                method="POST" 
+                class="shadow p-4 rounded needs-validation"
+                novalidate
+                enctype="multipart/form-data"
+            >
+
+                <!-- Title -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Product Title</label>
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        name="listing[title]" 
+                        value="<%= listing.title %>" 
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Please enter a product title.
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Description</label>
+                    <textarea 
+                        class="form-control" 
+                        name="listing[description]" 
+                        rows="3" 
+                        required
+                    ><%= listing.description %></textarea>
+                    <div class="invalid-feedback">
+                        Please enter a description.
+                    </div>
+                </div>
+
+                <!-- Image URL -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Change Image</label>
+                    <input 
+                        type="file" 
+                        class="form-control" 
+                        name="listing[image]" 
+                    >
+                    <div class="invalid-feedback">
+                        Please enter a valid image URL (must start with http or https).
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Price (₹)</label>
+                    <input 
+                        type="number" 
+                        class="form-control" 
+                        name="listing[price]" 
+                        value="<%= listing.price %>" 
+                        required
+                    >
+                    <div class="invalid-feedback">
+                        Please enter price.
+                    </div>
+                </div>
+                <!-- Category -->
+<div class="mb-3">
+    <label class="form-label fw-semibold">Category</label>
+    <select 
+        class="form-control" 
+        name="listing[category]" 
+        required
+    > 
+        <option value="">Select Category</option>
+
+        <option value="male" <%= listing.category === "male" ? "selected" : "" %>>Male</option>
+        <option value="female" <%= listing.category === "female" ? "selected" : "" %>>Female</option>
+        <option value="lens" <%= listing.category === "lens" ? "selected" : "" %>>Lens</option>
+        <option value="kids" <%= listing.category === "kids" ? "selected" : "" %>>Kids</option>
+        <option value="others" <%= listing.category === "others" ? "selected" : "" %>>Others</option>
+
+    </select>
+
+    <div class="invalid-feedback">
+        Please select a category.
+    </div>
+</div>
+
+
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-primary w-100 rounded-pill fw-semibold">
+                    Save Changes
+                </button>
+
+            </form>
+            <!-- FORM END -->
+
+        </div>
+    </div>
+
+</div>

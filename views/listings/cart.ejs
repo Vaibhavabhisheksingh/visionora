@@ -1,0 +1,63 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+    <h1 class="fw-bold mb-4">Your Cart</h1>
+
+    <% if(cartItems.length === 0) { %>
+        <div class="text-center">Your cart is empty.</div>
+    <% } else { %>
+        <div class="table-responsive">
+            <table class="table table-hover align-middle text-center">
+                <thead class="table-light">
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% cartItems.forEach(item => { %>
+                        <tr>
+                            <td style="width: 120px;">
+                                <img src="<%= item.image.url %>" alt="<%= item.title %>" class="img-fluid rounded" style="max-height: 80px;">
+                            </td>
+                            <td class="fw-semibold"><a href="/listings/<%= item._id %>" class="text-decoration-none text-dark"><%= item.title %></a></td>
+                            <td>₹ <%= item.price %></td>
+                            <td>
+                               <!-- Trigger Button -->
+<button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#confirmModal<%= item._id %>">
+    Remove
+</button>
+
+<!-- Confirmation Modal -->
+<div class="modal fade" id="confirmModal<%= item._id %>" tabindex="-1" aria-labelledby="confirmModalLabel<%= item._id %>" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="confirmModalLabel<%= item._id %>">Confirm Removal</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to remove "<%= item.title %>" from your cart?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+
+        <!-- Form to actually remove -->
+        <form action="/cart/remove/<%= item._id %>?_method=DELETE" method="POST" class="m-0">
+          <button type="submit" class="btn btn-danger">Yes, Remove</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+</div>

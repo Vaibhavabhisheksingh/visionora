@@ -1,0 +1,74 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5" style="max-width: 600px;">
+  <div class="card shadow-sm border-0 rounded-4 p-4">
+    <h2 class="mb-4 text-center fw-bold">Shipping & Payment</h2>
+
+    <form action="/orders/<%= product._id %>/buy" method="POST" class="needs-validation" novalidate>
+      
+      <!-- Shipping Details -->
+      <h5 class="mb-3 text-primary">Shipping Information</h5>
+      <div class="mb-3">
+        <input type="text" name="fullName" placeholder="Full Name" class="form-control form-control-lg rounded-3" required>
+      </div>
+      <div class="mb-3">
+        <input type="text" name="phone" placeholder="Phone Number" class="form-control form-control-lg rounded-3" required>
+      </div>
+      <div class="mb-3">
+        <input type="text" name="addressLine" placeholder="Street Address" class="form-control form-control-lg rounded-3" required>
+      </div>
+      <div class="row g-2 mb-3">
+        <div class="col-md-6">
+          <input type="text" name="city" placeholder="City" class="form-control form-control-lg rounded-3" required>
+        </div>
+        <div class="col-md-6">
+          <input type="text" name="state" placeholder="State" class="form-control form-control-lg rounded-3" required>
+        </div>
+      </div>
+      <div class="mb-4">
+        <input type="text" name="pincode" placeholder="PIN Code" class="form-control form-control-lg rounded-3" required>
+      </div>
+
+      <!-- Payment Method -->
+      <h5 class="mb-3 text-primary">Payment Method</h5>
+      <div class="form-check mb-4">
+        <input type="radio" name="paymentMethod" value="COD" id="cod" class="form-check-input" checked required>
+        <label for="cod" class="form-check-label fw-semibold">Cash on Delivery (COD)</label>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-success w-100 btn-lg rounded-pill shadow-sm">
+        Place Order
+      </button>
+    </form>
+  </div>
+</div>
+
+<style>
+  /* Input focus effect */
+  input.form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    border-color: #0d6efd;
+  }
+
+  /* Button hover */
+  button.btn-success:hover {
+    background-color: #198754;
+    transform: translateY(-2px);
+    transition: all 0.2s ease-in-out;
+  }
+
+  /* Card hover shadow */
+  .card.shadow-sm {
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  .card.shadow-sm:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  }
+
+  /* Always blue COD radio */
+  .form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+</style>

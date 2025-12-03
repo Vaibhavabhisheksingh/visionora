@@ -1,0 +1,63 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+    <h2 class="mb-4 fw-bold">All Users</h2>
+
+    <% if(users.length === 0) { %>
+        <div class="alert alert-info text-center">No users found.</div>
+    <% } else { %>
+        <div class="row g-3">
+            <% users.forEach(user => { %>
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <a href="/admin/users/<%= user._id %>" class="user-card d-flex flex-column align-items-center text-decoration-none shadow-sm p-3 rounded-4">
+                        <i class="fa-solid fa-circle-user user-icon mb-2"></i>
+                        <h6 class="mb-1 fw-bold text-dark"><%= user.username %></h6>
+                        <p class="text-muted mb-0"><%= user.email %></p>
+                    </a>
+                </div>
+            <% }) %>
+        </div>
+    <% } %>
+</div>
+
+<style>
+/* User Cards */
+.user-card {
+    background: #ffffff;
+    transition: transform 0.2s, box-shadow 0.2s;
+    text-align: center;
+}
+
+.user-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    text-decoration: none;
+}
+
+.user-card .user-icon {
+    font-size: 3rem;
+    color: #4A90E2;
+    transition: color 0.2s;
+}
+
+.user-card:hover .user-icon {
+    color: #1c6ed0;
+}
+
+.user-card h6 {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+}
+
+.user-card p {
+    font-size: 0.85rem;
+    margin-bottom: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .user-card .user-icon {
+        font-size: 2.5rem;
+    }
+}
+</style>

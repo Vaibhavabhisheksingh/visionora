@@ -1,0 +1,145 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+
+    <h2 class="mb-4 fw-bold text-center">All Products</h2>
+
+    <div class="row g-4">
+        <% products.forEach(product => { %>
+            <div class="col-6 col-md-4 col-lg-3">
+                <div class="card product-card shadow-sm h-100 border-0 rounded-4">
+
+                    <!-- Product Image -->
+                    <div class="ratio ratio-1x1 bg-light rounded-top-4 overflow-hidden">
+                        <img src="<%= product.image.url %>" class="product-img" alt="<%= product.title %>">
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-body p-3 d-flex flex-column">
+
+                        <h6 class="fw-semibold product-title text-truncate">
+                            <%= product.title %>
+                        </h6>
+
+                        <p class="text-dark fw-medium small mb-3">₹<%= product.price %></p>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex gap-2 mt-auto">
+                            <!-- Edit Button -->
+                            <a href="/listings/<%= product._id %>/edit" 
+                               class="btn btn-dark btn-sm flex-fill rounded-3">
+                                <i class="fa-solid fa-pen"></i>
+                            </a>
+
+                            <!-- Delete Button triggers Bootstrap Modal -->
+                            <button type="button"
+                                    class="btn btn-danger btn-sm flex-fill rounded-3"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal-<%= product._id %>">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Delete Confirmation Modal -->
+                <div class="modal fade" id="deleteModal-<%= product._id %>" tabindex="-1">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+
+                      <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">Confirm Delete</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+
+                      <div class="modal-body">
+                        Are you sure you want to delete <strong><%= product.title %></strong>?
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                          Cancel
+                        </button>
+
+                        <form action="/listings/<%= product._id %>?_method=DELETE" method="POST">
+                          <button type="submit" class="btn btn-danger">
+                            Delete
+                          </button>
+                        </form>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<style>
+/* ------------------- Product Cards ------------------- */
+.product-card {
+    transition: 0.25s ease-in-out;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+
+.product-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.product-card:hover .product-img {
+    transform: scale(1.05);
+}
+
+/* Title & Price */
+.product-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 0.95rem;
+    margin-bottom: 5px;
+}
+
+.card-body p {
+    margin-bottom: 10px;
+}
+
+/* Buttons */
+.btn-dark, .btn-danger {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.85rem;
+    padding: 6px 0;
+    transition: 0.2s;
+}
+
+.btn-dark:hover {
+    background-color: #000;
+}
+
+.btn-danger:hover {
+    background-color: #c92c38;
+}
+
+/* Responsive */
+@media (min-width: 992px) {
+    .col-lg-3 {
+        flex: 0 0 auto;
+        width: 25%;
+    }
+}
+
+</style>

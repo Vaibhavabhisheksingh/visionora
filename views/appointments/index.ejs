@@ -1,0 +1,67 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-4">
+    <h3 class="fw-bold mb-4">Your Appointments</h3>
+
+    <% if (appointments.length === 0) { %>
+        <div class="text-center">
+            No appointments booked yet.
+        </div>
+    <% } %>
+
+    <div class="row g-4">
+        <% appointments.forEach(app => { %>
+            <div class="col-md-4">
+                <div class="card shadow-sm border-0 rounded-4 p-3">
+                    <h5 class="fw-bold"><%= app.specialist.name %></h5>
+                    <p class="mb-1 text-muted">Fees: ₹<%= app.specialist.fees %></p>
+                    <p class="mb-1">Location: <%= app.specialist.location %></p>
+                    <p class="small">
+                        Appointment Time: <%= app.appointmentTime.toLocaleString() %>
+                    </p>
+                </div>
+                <button 
+  class="btn btn-danger btn-sm mt-2 w-100 rounded-pill cancel-btn"
+  data-id="<%= app._id %>"
+  data-bs-toggle="modal"
+  data-bs-target="#cancelModal">
+  Cancel Appointment
+</button>
+
+            </div>
+        <% }) %>
+    </div>
+</div>
+
+<!-- CANCEL CONFIRMATION MODAL -->
+<div class="modal fade" id="cancelModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold">Confirm Cancellation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to cancel this appointment?
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">No, Keep It</button>
+        <form id="cancelForm" method="POST">
+          <button class="btn btn-danger">Yes, Cancel</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const cancelButtons = document.querySelectorAll(".cancel-btn");
+  const cancelForm = document.getElementById("cancelForm");
+
+  cancelButtons.forEach(btn => {
+    btn.addEventListener("click", () => {
+      const id = btn.getAttribute("data-id");
+      cancelForm.action = `/appointments/${id}?_method=DELETE`;
+    });
+  });
+</script>

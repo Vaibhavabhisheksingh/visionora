@@ -1,0 +1,134 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5 mb-5">
+
+    <!-- Back Button -->
+    <a href="/specialists" class="btn btn-outline-dark mb-4 rounded-pill">
+        ← Back to Specialists
+    </a>
+
+    <div class="row g-5">
+
+        <!-- LEFT: Doctor Image -->
+        <div class="col-md-6">
+            <img 
+                src="<%= specialist.image.url %>" 
+                alt="<%= specialist.name %>" 
+                class="img-fluid rounded shadow-sm"
+                style="width:100%; max-height:450px; object-fit:cover;"
+            >
+        </div>
+
+        <!-- RIGHT: Doctor Info -->
+        <div class="col-md-6 d-flex flex-column">
+
+            <h1 class="fw-bold mb-3"><%= specialist.name %></h1>
+
+            <h4 class="text-primary fw-semibold mb-2">
+                <%= specialist.specialization %>
+            </h4>
+
+            <h5 class="text-success mb-3">
+                Experience: <%= specialist.experience %> years
+            </h5>
+            <h5 class="fw-semibold text-info mb-3">
+    Location: <%= specialist.location %>
+</h5>
+
+            <h4 class="fw-semibold text-danger mb-4">
+                Consultation Fees: ₹<%= specialist.fees.toLocaleString("en-IN") %>
+            </h4>
+
+            <p class="text-muted mb-4" style="font-size: 1.05rem;">
+                <%= specialist.description %>
+            </p>
+
+            <!-- Take Appointment -->
+            <a href="/appointments/<%= specialist._id %>/new" class="btn btn-success btn-lg rounded-pill mb-3">
+                Take Appointment
+            </a>
+
+            <!-- Message Doctor (Optional) -->
+            <a href="#" class="btn btn-dark btn-lg rounded-pill mb-3">
+                Message Doctor
+            </a>
+
+            <% if (currentUser && currentUser.username === "admin") { %>
+
+                <!-- Edit Specialist -->
+                <a href="/specialists/<%= specialist._id %>/edit" 
+                class="btn btn-warning btn-sm rounded-pill mb-3">
+                    <i class="fa-solid fa-pen"></i> Edit
+                </a>
+
+                <!-- Delete Specialist -->
+                <form action="/specialists/<%= specialist._id %>?_method=DELETE" 
+                        method="POST" class="d-inline">
+                    <button class="btn btn-danger btn-sm rounded-pill mb-3">
+                        <i class="fa-solid fa-trash"></i> Delete
+                    </button>
+                </form>
+
+            <% } %>
+
+        </div>
+
+    </div>
+
+</div> 
+   <% if(currentUser){ %>
+<div class="card shadow-sm p-4 mb-4">
+    <h4 class="mb-3">Leave a Review</h4>
+    <form action="/specialists/<%= specialist._id %>/reviews" method="POST" class="needs-validation" novalidate>
+        <div class="mb-3">
+            <fieldset class="starability-slot">
+                        <input type="radio" id="no-rate" class="input-no-rate" name="review[rating]" value="1" checked aria-label="No rating." />
+                        <input type="radio" id="first-rate1" name="review[rating]" value="1" />
+                        <label for="first-rate1" title="Terrible">1 star</label>
+                        <input type="radio" id="first-rate2" name="review[rating]" value="2" />
+                        <label for="first-rate2" title="Not good">2 stars</label>
+                        <input type="radio" id="first-rate3" name="review[rating]" value="3" />
+                        <label for="first-rate3" title="Average">3 stars</label>
+                        <input type="radio" id="first-rate4" name="review[rating]" value="4" />
+                        <label for="first-rate4" title="Very good">4 stars</label>
+                        <input type="radio" id="first-rate5" name="review[rating]" value="5" />
+                        <label for="first-rate5" title="Amazing">5 stars</label>
+                    </fieldset>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label">Comment</label>
+            <textarea name="review[comment]" rows="3" class="form-control" placeholder="Write your experience..." required></textarea>
+            <div class="invalid-feedback">Comment cannot be empty.</div>
+        </div>
+
+        <button class="btn btn-primary rounded-pill" type="submit">Submit Review</button>
+    </form>
+</div>
+<% } %>
+
+<h3 class="mb-3">Customer Reviews</h3>
+<% if(specialist.reviews.length === 0) { %>
+    <p class="text-muted">No reviews yet. Be the first to review!</p>
+<% } %>
+
+<div class="row gy-4">
+    <% specialist.reviews.forEach(review => { %>
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <p class="fw-bold mb-1"><i class="fa-solid fa-user"></i> <%= review.author.username %></p>
+                    <!-- Rating Stars -->
+                    <div class="mb-2">
+                        <p class="starability-result card-text" data-rating="<%= review.rating %>">
+                        </p>
+                    </div>
+                <p class="mb-2"><%= review.comment %></p>
+                <% if (currentUser && review.author && review.author._id.equals(currentUser._id)) { %>
+                <form action="/specialists/<%= specialist._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST">
+                    <button class="btn btn-sm btn-outline-danger rounded-pill"><i class="fa-solid fa-trash"></i> Delete</button>
+                </form>
+                <% } %>
+            </div>
+        </div>
+    <% }) %>
+</div>

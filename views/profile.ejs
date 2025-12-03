@@ -1,0 +1,97 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="card shadow-lg p-4" style="width: 450px; border-radius: 22px;">
+
+    <!-- TOP PROFILE SECTION -->
+    <div class="text-center">
+      <i class="fa-solid fa-circle-user fa-4x mb-3 text-dark"></i>
+      <h3 class="fw-bold mb-0"><%= user.username %></h3>
+      <p class="text-muted mb-1"><%= user.email %></p>
+    </div>
+
+    <hr>
+
+    <!-- ORDERS SECTION -->
+    <div>
+      <h5 class="fw-bold">Your Orders <span class="text-muted">(<%= orders.length %>)</span></h5>
+
+      <% if (orders.length === 0) { %>
+        <p class="text-muted">No orders yet.</p>
+      <% } else { %>
+        <ul class="list-group mt-2">
+          <% orders.forEach(order => { %>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              <span><i class="fa-solid fa-bag-shopping text-primary"></i> <%= order.product?.title %></span>
+              <span class="badge bg-secondary"><%= order.status %></span>
+            </li>
+          <% }) %>
+        </ul>
+      <% } %>
+    </div>
+
+    <hr>
+
+    <!-- APPOINTMENT SECTION -->
+    <div>
+      <h5 class="fw-bold">Your Appointments <span class="text-muted">(<%= appointments.length %>)</span></h5>
+
+      <% if (appointments.length === 0) { %>
+        <p class="text-muted">No appointments yet.</p>
+      <% } else { %>
+        <ul class="list-group mt-2">
+  <% appointments.forEach(app => { %>
+    <li class="list-group-item">
+      <strong><i class="fa-solid fa-user-doctor text-success"></i> 
+        <%= app.specialist?.name %>
+      </strong>
+      <br>
+      <small class="text-muted">
+        Date: <%= app.appointmentTime.toLocaleString() %> &nbsp;
+      </small>
+    </li>
+  <% }) %>
+</ul>
+
+      <% } %>
+    </div>
+
+    <hr>
+
+    <!-- DELETE ACCOUNT -->
+    <button type="button" class="btn btn-danger w-100 rounded-pill fw-semibold" data-bs-toggle="modal" data-bs-target="#deleteAccountModal">
+      <i class="fa-solid fa-trash"></i> Delete My Account
+    </button>
+
+    <!-- GO BACK BUTTON -->
+    <a href="/listings" class="btn btn-outline-dark w-100 rounded-pill fw-semibold mt-2">
+      <i class="fa-solid fa-arrow-left"></i> Back to Home
+    </a>
+
+  </div>
+</div>
+
+
+<!-- Delete Account Confirmation Modal -->
+<div class="modal fade" id="deleteAccountModal" tabindex="-1" aria-labelledby="deleteAccountModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content rounded-4 shadow-lg">
+      <div class="modal-header border-0">
+        <h5 class="modal-title fw-bold" id="deleteAccountModalLabel">Confirm Account Deletion</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to delete your account? This will permanently remove your account along with all orders, appointments, and reviews.
+      </div>
+      <div class="modal-footer border-0">
+        <button type="button" class="btn btn-secondary rounded-pill" data-bs-dismiss="modal">Cancel</button>
+        <form action="/delete-account" method="POST" class="d-inline">
+          <button type="submit" class="btn btn-danger rounded-pill fw-semibold">
+            Delete My Account
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

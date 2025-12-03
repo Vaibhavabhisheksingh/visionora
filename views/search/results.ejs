@@ -1,0 +1,50 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-5">
+
+  <h2 class="fw-bold mb-4">Search Results for "<%= query %>"</h2>
+
+  <!-- PRODUCTS RESULTS -->
+  <h4 class="mb-3">Products</h4>
+  <% if(products.length === 0) { %>
+    <div class="alert alert-info">No products found.</div>
+  <% } else { %>
+    <div class="row g-4 mb-5">
+      <% products.forEach(product => { %>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <img src="<%= product.image.url %>" class="card-img-top" style="height:200px; object-fit:cover;">
+            <div class="card-body">
+              <h5 class="card-title"><%= product.title %></h5>
+              <p class="card-text">₹ <%= product.price %></p>
+              <p class="card-text"><small class="text-muted"><%= product.category %></small></p>
+              <a href="/listings/<%= product._id %>" class="btn btn-dark w-100">View</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <!-- SPECIALISTS RESULTS -->
+  <h4 class="mb-3">Specialists</h4>
+  <% if(specialists.length === 0) { %>
+    <div class="alert alert-info">No specialists found.</div>
+  <% } else { %>
+    <div class="row g-4">
+      <% specialists.forEach(spec => { %>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title"><%= spec.name %></h5>
+              <p class="card-text"><i class="fa-solid fa-location-dot me-2"></i> <%= spec.location %></p>
+              <p class="card-text"><i class="fa-solid fa-user-doctor me-2"></i> <%= spec.specialization %></p>
+              <a href="/specialists/<%= spec._id %>" class="btn btn-dark w-100">View Profile</a>
+            </div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } %>
+
+</div>
