@@ -149,8 +149,12 @@ app.use("/admin", adminRoutes);
 app.get("/healthz", (req, res) => {
     res.status(200).send("ok");
 });
+// app.get("/", (req, res) => {
+//     res.status(200).send("Service is up");
+// });
+
 app.get("/", (req, res) => {
-    res.status(200).send("Service is up");
+    res.redirect("/listings");
 });
 
 
