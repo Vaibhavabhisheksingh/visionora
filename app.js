@@ -101,7 +101,7 @@ store.collectionP
 const sessionOptions = {
     store,
     name: "visionora.sid",
-    secret: process.env.SECRET,
+    secret: process.env.SECRET || "mysupersecretcode",
     resave: false,
     saveUninitialized: false,
     cookie: {
@@ -145,6 +145,14 @@ app.use("/cart", cartRoutes);
 app.use("/search", searchRoutes);
 app.use("/admin", adminRoutes);
 
+// Health and root endpoints for platform probes and default landing
+app.get("/healthz", (req, res) => {
+    res.status(200).send("ok");
+});
+app.get("/", (req, res) => {
+    res.status(200).send("Service is up");
+});
+
 
 app.all(/.*/, (req, res, next) => {
     next(new ExpressError("Page Not Found", 404));
@@ -162,6 +170,7 @@ app.use((err, req, res, next) => {
 });
 
 
-app.listen(8080, () => {
-    console.log("Server is running on port 8080");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
 })
