@@ -66,22 +66,29 @@ app.use(methodOverride("_method"));
 app.engine("ejs", ejsMate);
 app.use(express.static(path.join(__dirname, "/public")));
 
-const clientPromise = mongoose.connection.asPromise().then((conn) => conn.getClient());
+// const clientPromise = mongoose.connection.asPromise().then((conn) => conn.getClient());
+
+// const store = MongoStore.create({
+//     clientPromise,
+//     dbName: sessionDbName,
+//     collectionName: "sessions",
+//     serialize: (session) => JSON.stringify(session),
+//     unserialize: (data) => {
+//         if (!data) return undefined;
+//         if (typeof data === "string") {
+//             try { return JSON.parse(data); } catch { return undefined; }
+//         }
+//         return data;
+//     },
+//     crypto: { secret: false }
+// });
 
 const store = MongoStore.create({
-    clientPromise,
-    dbName: sessionDbName,
+    mongoUrl: dbUrl,
     collectionName: "sessions",
-    serialize: (session) => JSON.stringify(session),
-    unserialize: (data) => {
-        if (!data) return undefined;
-        if (typeof data === "string") {
-            try { return JSON.parse(data); } catch { return undefined; }
-        }
-        return data;
-    },
-    crypto: { secret: false }
+    ttl: 14 * 24 * 60 * 60, // 14 days
 });
+
 
 store.on("error", (err) => {
     console.error("ERROR in Mongo Store", err);
